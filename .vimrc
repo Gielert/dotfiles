@@ -45,6 +45,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 "+--- Syntax ---+
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'kchmck/vim-coffee-script'
 Plug 'mtscout6/vim-cjsx'
 

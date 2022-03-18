@@ -1,3 +1,14 @@
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
 #####################################################################################################################
 #################                          Define the $mod variable/key                             #################
 #####################################################################################################################
@@ -53,27 +64,6 @@ bindsym $mod+Shift+9 move container to workspace 9
 
 # start dmenu
 bindsym $mod+d exec --no-startup-id rofi -show run
-
-
-#####################################################################################################################
-#################                          how to exit, logoff, suspend, ...                        #################
-#####################################################################################################################
-
-bindsym $mod+0 mode "$mode_system"
-
-set $mode_system System (k) lock, (l) logout, (u) suspend, (h) hibernate, (r) reboot, (s) shutdown
-mode "$mode_system" {
-  bindsym k exec --no-startup-id ~/.config/i3/scripts/i3exit.sh lock, mode "default"
-  bindsym l exec --no-startup-id ~/.config/i3/scripts/i3exit.sh logout, mode "default"
-  bindsym u exec --no-startup-id ~/.config/i3/scripts/i3exit.sh suspend, mode "default"
-  bindsym h exec --no-startup-id ~/.config/i3/scripts/i3exit.sh hibernate, mode "default"
-  bindsym r exec --no-startup-id ~/.config/i3/scripts/i3exit.sh reboot, mode "default"
-  bindsym s exec --no-startup-id ~/.config/i3/scripts/i3exit.sh shutdown, mode "default"
-
-  # back to normal: Enter or Escape
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
 
 
 #####################################################################################################################
@@ -186,7 +176,11 @@ bindsym $mod+F2 exec --no-startup-id firefox
 
 bindsym $mod+F3 exec --no-startup-id discord
 
+####################################################################################################################
+################                                  polybar                                             ##############
+####################################################################################################################
 
+exec_always --no-startup-id ~/.config/polybar/launch.sh &
 
 #####################################################################################################################
 #################                          audio settings                                           #################
@@ -208,20 +202,11 @@ bindsym XF86MonBrightnessDown exec light -U 1 # decrease screen brightness
 
 
 #####################################################################################################################
-#################                          bar toggle                                               #################
-#####################################################################################################################
-
-# bar toggle, hide or show
-bindsym $mod+b bar mode toggle
-
-bindsym $mod+i bar mode invisible
-
-
-#####################################################################################################################
 #################                          i3 gaps next                                             #################
 #####################################################################################################################
 
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 0
+for_window [title="^.*"] border pixel 0
 gaps inner 10
 gaps outer 1
 #smart_gaps on
@@ -240,37 +225,45 @@ set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
 bindsym $mod+Shift+g mode "$mode_gaps"
 
 mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+  bindsym o      mode "$mode_gaps_outer"
+  bindsym i      mode "$mode_gaps_inner"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
 
 mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
+  bindsym plus  gaps inner current plus 5
+  bindsym minus gaps inner current minus 5
+  bindsym 0     gaps inner current set 0
 
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
+  bindsym Shift+plus  gaps inner all plus 5
+  bindsym Shift+minus gaps inner all minus 5
+  bindsym Shift+0     gaps inner all set 0
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
 
 mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
+  bindsym plus  gaps outer current plus 5
+  bindsym minus gaps outer current minus 5
+  bindsym 0     gaps outer current set 0
 
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
+  bindsym Shift+plus  gaps outer all plus 5
+  bindsym Shift+minus gaps outer all minus 5
+  bindsym Shift+0     gaps outer all set 0
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
+
+###
+### Bind applications to workspace
+###
+
+assign [class="(?i)kitty"] 		$ws1
+assign [class="(?i)firefox"] 		$ws2
+assign [class="(?i)discord"] 		$ws3
 
 
 #####################################################################################################################
@@ -281,49 +274,4 @@ mode "$mode_gaps_outer" {
 exec_always --no-startup-id picom --experimental-backends --config ~/.config/i3/picom.conf
 exec_always --no-startup-id nitrogen --restore
 
-
-#####################################################################################################################
-#####################################################################################################################
-#####################################################################################################################
-#################                          bar appearance                                           #################
-#####################################################################################################################
-#####################################################################################################################
-#####################################################################################################################
-
-bar {
-  height 25
-  position top
-  font pango:OperatorMono Nerd Font 12
-  status_command i3status
-  tray_padding 1
-  strip_workspace_numbers yes
-
-  colors {
-    separator  #1f222d
-    background #1f222d
-    statusline #81a1c1
-
-    #                   border  background text
-    focused_workspace  #1f222d #1f222d    #81a1c1
-    active_workspace   #1f222d #252936    #5e81ac
-    inactive_workspace #1f222d #1f222d    #4c566a
-    urgent_workspace   #1f222d #1f222d    #ee829f
-    binding_mode       #1f222d #81a1c1    #2e3440
-  }
-}
-
-##START THEMING WM
-
-# Window color settings
-# class                 border  backgr. text    indicator
-client.focused          #81a1c1 #81a1c1 #ffffff #81a1c1
-client.unfocused        #2e3440 #1f222d #888888 #1f222d
-client.focused_inactive #2e3440 #1f222d #888888 #1f222d
-client.placeholder      #2e3440 #1f222d #888888 #1f222d
-client.urgent           #900000 #900000 #ffffff #900000
-
-client.background       #242424
-
 ##STOP THEMING WM
-
-exec xset r rate 300 50 &
