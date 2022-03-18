@@ -48,6 +48,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'kchmck/vim-coffee-script'
 Plug 'mtscout6/vim-cjsx'
+Plug 'Fymyte/rasi.vim'
 
 call plug#end()
 
