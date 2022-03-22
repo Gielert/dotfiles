@@ -63,7 +63,7 @@ bindsym $mod+Shift+9 move container to workspace 9
 #####################################################################################################################
 
 # start dmenu
-bindsym $mod+d exec --no-startup-id rofi -show run
+bindsym $mod+d exec --no-startup-id rofi -show drun
 
 
 #####################################################################################################################
