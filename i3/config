@@ -144,10 +144,10 @@ bindsym Mod1+Ctrl+Left workspace prev
 default_orientation horizontal
 
 # split in horizontal orientation
-bindsym $mod+Crtl+h split h
+bindsym $mod+Ctrl+h split h
 
 # split in vertical orientation
-bindsym $mod+Crtl+v split v
+bindsym $mod+Ctrl+v split v
 
 # Enter fullscreen mode for the focused container
 # Super + F in arcolinux is execute thunar
@@ -176,6 +176,8 @@ bindsym $mod+F2 exec --no-startup-id firefox
 
 bindsym $mod+F3 exec --no-startup-id discord
 
+bindsym $mod+Print exec --no-startup-id flameshot gui
+
 ####################################################################################################################
 ################                                  polybar                                             ##############
 ####################################################################################################################
@@ -186,7 +188,7 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh &
 ################                        lock and poweroff                                             ##############
 ####################################################################################################################
 
-bindsym $mod+0 exec --no-startup-id ~/.config/polybar/scripts/powermenu.sh
+bindsym $mod+0 exec --no-startup-id ~/.config/rofi/bin/powermenu
 
 #####################################################################################################################
 #################                          audio settings                                           #################
@@ -267,9 +269,10 @@ mode "$mode_gaps_outer" {
 ### Bind applications to workspace
 ###
 
-assign [class="(?i)kitty"] 		$ws1
+assign [class="(?i)kitty"] 		  $ws1
 assign [class="(?i)firefox"] 		$ws2
 assign [class="(?i)discord"] 		$ws3
+assign [class="(?i)spotify"] 		$ws4
 
 
 #####################################################################################################################
@@ -279,5 +282,15 @@ assign [class="(?i)discord"] 		$ws3
 # if you want transparency on non-focused windows, ...
 exec_always --no-startup-id picom --experimental-backends --config ~/.config/i3/picom.conf
 exec_always --no-startup-id nitrogen --restore
+
+# Don’t treat Plasma pop-ups as full-sized windows
+for_window [class="plasmashell"] floating enable
+
+# Don’t spawn an empty window for the Plasma Desktop
+for_window [title="Desktop — Plasma"] kill, floating enable, border none
+
+# Don’t let notifications and non-interactive pop-up windows steal focus
+no_focus [class="plasmashell" window_type="notification"]
+no_focus [class="plasmashell" window_type="on_screen_display"]
 
 ##STOP THEMING WM

@@ -5,6 +5,8 @@ set cc=119
 set laststatus=2
 set noshowmode
 set noswapfile
+set nocompatible
+set termguicolors
 
 if !has('gui_running')
   set t_Co=256
@@ -33,7 +35,7 @@ set shiftwidth=2
 call plug#begin()
 
 "+--- Colorscheme --+
-Plug 'arcticicestudio/nord-vim'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
 "+--- UI ---+
 Plug 'itchyny/lightline.vim'
@@ -43,20 +45,19 @@ Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'editorconfig/editorconfig-vim'
 
 "+--- Syntax ---+
-Plug 'maxmellon/vim-jsx-pretty'
-Plug 'kchmck/vim-coffee-script'
-Plug 'mtscout6/vim-cjsx'
+Plug 'sheerun/vim-polyglot'
 Plug 'Fymyte/rasi.vim'
 
 call plug#end()
 
 "+--- Theme ---+
-colorscheme nord
+colorscheme catppuccin_mocha
 
 let g:lightline = {
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'catppuccin_mocha',
       \ 'active': {
       \   'left': [
       \     [ 'mode', 'paste' ],
@@ -114,3 +115,6 @@ function! LightlineFilename()
        \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
+
+let g:vim_jsx_pretty_colorful_config = 1
+let g:vim_jsx_pretty_template_tags = [ 'jsx', 'js' ]
