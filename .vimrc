@@ -50,6 +50,7 @@ Plug 'editorconfig/editorconfig-vim'
 "+--- Syntax ---+
 Plug 'sheerun/vim-polyglot'
 Plug 'Fymyte/rasi.vim'
+Plug 'prisma/vim-prisma'
 
 call plug#end()
 
