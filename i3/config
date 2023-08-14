@@ -184,6 +184,14 @@ bindsym $mod+Print exec --no-startup-id flameshot gui
 
 exec_always --no-startup-id ~/.config/polybar/launch.sh &
 
+
+####################################################################################################################
+################                                   dunst                                              ##############
+####################################################################################################################
+
+exec --no-startup-id dunst
+
+
 ####################################################################################################################
 ################                        lock and poweroff                                             ##############
 ####################################################################################################################
@@ -205,8 +213,8 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 #####################################################################################################################
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 1 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 1 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec light -A 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec light -U 5 # decrease screen brightness
 
 
 #####################################################################################################################
@@ -285,6 +293,9 @@ exec_always --no-startup-id nitrogen --restore
 
 # Don’t treat Plasma pop-ups as full-sized windows
 for_window [class="plasmashell"] floating enable
+
+# Kill the desktop
+for_window [title="Desktop @ QRect.*"] kill; floating enable; border none
 
 # Don’t spawn an empty window for the Plasma Desktop
 for_window [title="Desktop — Plasma"] kill, floating enable, border none

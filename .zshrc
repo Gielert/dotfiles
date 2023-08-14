@@ -25,3 +25,4 @@ export EDITOR="vim"
 setxkbmap -option caps:escape
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+source /usr/share/nvm/init-nvm.sh
