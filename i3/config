@@ -172,7 +172,7 @@ bindsym $mod+e layout toggle split
 #####################################################################################################################
 bindsym $mod+Return exec --no-startup-id kitty;focus
 
-bindsym $mod+F2 exec --no-startup-id firefox
+bindsym $mod+F2 exec --no-startup-id brave
 
 bindsym $mod+F3 exec --no-startup-id discord
 
@@ -277,7 +277,7 @@ mode "$mode_gaps_outer" {
 ###
 
 assign [class="(?i)kitty"] 		  $ws1
-assign [class="(?i)firefox"] 		$ws2
+assign [class="(?i)brave"] 		  $ws2
 assign [class="(?i)discord"] 		$ws3
 assign [class="(?i)spotify"] 		$ws4
 
@@ -301,5 +301,11 @@ for_window [title="^Steam Keyboard$"] floating enable
 # if you want transparency on non-focused windows, ...
 exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
 exec_always --no-startup-id nitrogen --restore
+
+#####################################################################################################################
+#################                          picom and wallpaper                                      #################
+#####################################################################################################################
+
+exec_always --no-startup-id polkit-dumb-agent
 
 ##STOP THEMING WM

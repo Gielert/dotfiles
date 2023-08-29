@@ -40,6 +40,7 @@ Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 "+--- UI ---+
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 
 "+--- IDE / Workflow ---+
