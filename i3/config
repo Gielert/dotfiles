@@ -172,7 +172,7 @@ bindsym $mod+e layout toggle split
 #####################################################################################################################
 bindsym $mod+Return exec --no-startup-id kitty;focus
 
-bindsym $mod+F2 exec --no-startup-id brave
+bindsym $mod+F2 exec --no-startup-id brave --password-store=basic
 
 bindsym $mod+F3 exec --no-startup-id discord
 
