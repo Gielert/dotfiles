@@ -2,7 +2,7 @@
   "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
   "catppuccin": { "branch": "main", "commit": "9703f227bfab20d04bcee62d2f08f1795723b4ae" },
   "copilot.vim": { "branch": "release", "commit": "25feddf8e3aa79f0573c8f43ddb13c44c530cfa5" },
-  "lazy.nvim": { "branch": "main", "commit": "aedcd79811d491b60d0a6577a9c1701063c2a609" },
+  "lazy.nvim": { "branch": "main", "commit": "077102c5bfc578693f12377846d427f49bc50076" },
   "lualine.nvim": { "branch": "master", "commit": "7d131a8d3ba5016229e8a1d08bf8782acea98852" },
   "nvim-tree.lua": { "branch": "master", "commit": "030defdb6522f5f716d8201d20ca1a2baa57ca66" },
   "nvim-treesitter": { "branch": "master", "commit": "f224fef9d28e1fd30ccd9a9c374ced2546dde6ea" },

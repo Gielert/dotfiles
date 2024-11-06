@@ -1,3 +1,18 @@
+include /etc/sway/config.d/*
+
+input "1739:31251:SYNA2393:00_06CB:7A13_Touchpad" {
+  # Enable natural scrolling
+  # Two finger right click for context menu, three finger click for middle mouse
+  natural_scroll enabled
+  click_method clickfinger
+}
+
+input type:keyboard {
+  # Capslock key should work as escape key
+  # See /usr/share/X11/xkb/rules/xorg.lst for options
+  xkb_options caps:escape
+}
+
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -26,7 +41,7 @@ set $down j
 set $left h
 set $right l
 
-font pango:OperatorMono Nerd Font 0
+font pango:JetBrainsMonoNerdFont 10
 
 
 #####################################################################################################################
@@ -63,7 +78,7 @@ bindsym $mod+Shift+9 move container to workspace 9
 #####################################################################################################################
 
 # start dmenu
-bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+d exec rofi -show drun
 
 
 #####################################################################################################################
@@ -75,7 +90,7 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+Shift+r restart
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+c sway reload
 
 
 #####################################################################################################################
@@ -170,41 +185,45 @@ bindsym $mod+e layout toggle split
 #####################################################################################################################
 #################                          applications keyboard shortcuts                          #################
 #####################################################################################################################
-bindsym $mod+Return exec --no-startup-id kitty;focus
+bindsym $mod+Return exec kitty;focus
 
-bindsym $mod+F2 exec --no-startup-id brave --password-store=basic
+bindsym $mod+F2 exec brave --enable-features=TouchpadOverscrollHistoryNavigation
 
-bindsym $mod+F3 exec --no-startup-id discord
+bindsym $mod+F3 exec vesktop
 
-bindsym $mod+Print exec --no-startup-id flameshot gui
+bindsym $mod+Print exec flameshot gui
+
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
 ####################################################################################################################
 ################                                  polybar                                             ##############
 ####################################################################################################################
 
-exec_always --no-startup-id ~/.config/polybar/launch.sh &
+exec_always waybar
 
 
 ####################################################################################################################
 ################                                   dunst                                              ##############
 ####################################################################################################################
 
-exec_always --no-startup-id /usr/bin/dunst
+exec_always /usr/bin/dunst
 
 ####################################################################################################################
 ################                        lock and poweroff                                             ##############
 ####################################################################################################################
 
-bindsym $mod+0 exec --no-startup-id ~/.config/rofi/bin/powermenu
+bindsym $mod+0 exec ~/.config/rofi/bin/powermenu
 
 #####################################################################################################################
 #################                          audio settings                                           #################
 #####################################################################################################################
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 
 #####################################################################################################################
@@ -212,8 +231,8 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 #####################################################################################################################
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 1 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 1 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec light -A 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec light -U 10 # decrease screen brightness
 
 
 #####################################################################################################################
@@ -276,10 +295,10 @@ mode "$mode_gaps_outer" {
 ### Bind applications to workspace
 ###
 
-assign [class="(?i)kitty"] 		  $ws1
-assign [class="(?i)brave"] 		  $ws2
-assign [class="(?i)discord"] 		$ws3
-assign [class="(?i)spotify"] 		$ws4
+assign [app_id="kitty"] 		1
+assign [app_id="brave-browser"] 	2
+assign [app_id="vesktop"] 		3
+assign [class="(?i)spotify"] 		4
 
 # https://github.com/ValveSoftware/steam-for-linux/issues/1040
 for_window [class="^Steam$" title="^Friends$"] floating enable
@@ -293,19 +312,26 @@ for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
 for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
 for_window [title="^Steam Keyboard$"] floating enable
 
+# 1password floating
+for_window [class="1Password"] floating enable
+
+for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
+
 
 #####################################################################################################################
-#################                          picom and wallpaper                                      #################
+#################                                wallpaper                                          #################
 #####################################################################################################################
 
 # if you want transparency on non-focused windows, ...
-exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
-exec_always --no-startup-id nitrogen --restore
+exec_always swaybg -i ~/.dots/wallpaper.png -m center -c 131020
+exec_always nm-applet &
+exec_always blueman-applet &
+exec_always jamesdsp -t &
 
 #####################################################################################################################
-#################                          picom and wallpaper                                      #################
+#################                                 polkit                                            #################
 #####################################################################################################################
 
-exec_always --no-startup-id polkit-dumb-agent
+exec_always polkit-dumb-agent
 
 ##STOP THEMING WM
